@@ -1,0 +1,39 @@
+# Versi file compose, '3.8' adalah versi modern yang bagus.
+version: '3.8'
+
+# 'services' adalah tempat kita mendefinisikan setiap container kita.
+services:
+  # Nama layanan pertama kita: 'api'
+  api:
+    # 'build: .' memberitahu Compose untuk mencari Dockerfile di direktori saat ini
+    # dan membangunnya. Jika image sudah ada, ia akan menggunakannya.
+    build: .
+    # Beri nama container agar mudah dikenali
+    container_name: rag-api-service
+    # Petakan port 8000 di mesin kita ke port 8000 di container
+    ports:
+      - "8000:8000"
+    # 'env_file' memuat variabel lingkungan dari file .env kita,
+    # sama seperti flag --env-file di docker run.
+    env_file:
+      - .env
+    # 'volumes' membuat koneksi antara folder di laptop kita dan di dalam container.
+    # Ini sangat berguna untuk pengembangan: setiap kali Anda mengubah kode di folder ./app,
+    # perubahan itu akan langsung terlihat di dalam container tanpa perlu rebuild.
+    volumes:
+      - ./app:/app/app
+    # 'depends_on' memberitahu Compose untuk memulai layanan 'redis'
+    # SEBELUM memulai layanan 'api'. Ini penting!
+    depends_on:
+      - redis
+
+  # Nama layanan kedua kita: 'redis'
+  redis:
+    # 'image:' memberitahu Compose untuk langsung menarik image resmi 'redis:alpine'
+    # dari Docker Hub. 'alpine' adalah versi yang sangat kecil.
+    image: "redis:alpine"
+    # Beri nama container
+    container_name: redis-cache
+    # Petakan port 6379 (port default Redis) agar kita bisa mengaksesnya dari luar jika perlu.
+    ports:
+      - "6379:6379"

@@ -1,0 +1,45 @@
+# Nama alur kerja yang akan muncul di tab "Actions" GitHub
+name: Continuous Integration
+
+# Tentukan pemicu (event) yang akan menjalankan alur kerja ini
+on:
+  # Jalankan saat ada push ke branch mana pun
+  push:
+    branches: [ "**" ]
+  # Jalankan saat ada Pull Request dibuka atau diperbarui
+  pull_request:
+    branches: [ "main" ]
+
+# Definisikan pekerjaan yang harus dilakukan
+jobs:
+  # Kita punya satu job bernama 'build-and-test'
+  build-and-test:
+    # Tentukan sistem operasi untuk runner-nya (mesin virtual sementara)
+    runs-on: ubuntu-latest
+
+    # Rincian langkah-langkah yang akan dieksekusi secara berurutan
+    steps:
+      # Langkah 1: Checkout kode dari repositori
+      # Menggunakan sebuah 'action' siap pakai dari GitHub
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Langkah 2: Setup lingkungan Python
+      # Menggunakan 'action' lain untuk menginstal Python versi 3.11
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Langkah 3: Instal dependensi
+      # 'run' mengeksekusi perintah shell biasa di runner
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      # Langkah 4: Jalankan tes dengan PyTest
+      # Ini adalah langkah validasi utama kita
+      - name: Run tests with pytest
+        run: |
+          pytest
