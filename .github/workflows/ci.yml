@@ -41,5 +41,13 @@ jobs:
       # Langkah 4: Jalankan tes dengan PyTest
       # Ini adalah langkah validasi utama kita
       - name: Run tests with pytest
+      # 'env' akan mengatur variabel lingkungan hanya untuk langkah ini
+        env:
+          # Nama variabel di sini (kiri) harus cocok dengan yang dicari os.getenv()
+          # secrets.NAMA_SECRET di sini (kanan) harus cocok dengan nama yang Anda buat di GitHub
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          # Jika Anda juga butuh Cohere, tambahkan di sini:
+          # COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
         run: |
           python -m pytest
+
