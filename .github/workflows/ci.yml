@@ -42,4 +42,4 @@ jobs:
       # Ini adalah langkah validasi utama kita
       - name: Run tests with pytest
         run: |
-          pytest
+          python -m pytest
