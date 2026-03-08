@@ -38,6 +38,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY ./app ./app
 COPY ./data ./data
 COPY ./chroma_db ./chroma_db
+COPY ./tests ./tests
 
 # Ekspos port
 EXPOSE 8000
