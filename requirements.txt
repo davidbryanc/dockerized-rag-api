@@ -48,6 +48,7 @@ humanfriendly==10.0
 idna==3.11
 importlib_metadata==8.7.1
 importlib_resources==6.5.2
+iniconfig==2.3.0
 itsdangerous==2.2.0
 Jinja2==3.1.6
 jiter==0.13.0
@@ -97,6 +98,7 @@ orjson==3.11.7
 ormsgpack==1.12.2
 overrides==7.7.0
 packaging==26.0
+pluggy==1.6.0
 posthog==5.4.0
 propcache==0.4.1
 protobuf==6.33.5
@@ -112,6 +114,7 @@ Pygments==2.19.2
 PyPika==0.51.1
 pyproject_hooks==1.2.0
 pyreadline3==3.5.4
+pytest==9.0.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
 python-multipart==0.0.22
