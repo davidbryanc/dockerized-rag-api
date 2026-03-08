@@ -1,0 +1,57 @@
+# Nama alur kerja yang akan muncul di tab "Actions"
+name: Create and Publish Docker Image
+
+# Tentukan pemicu (event)
+on:
+  # Alur kerja ini HANYA akan berjalan saat ada push
+  push:
+    # ke branch 'main'
+    branches: [ "main" ]
+
+# Definisikan pekerjaan yang harus dilakukan
+jobs:
+  # Kita punya satu job bernama 'build-and-push'
+  build-and-push:
+    # Tentukan sistem operasi untuk runner-nya
+    runs-on: ubuntu-latest
+    # Tentukan izin yang dibutuhkan oleh job ini.
+    # Izin 'packages: write' diperlukan untuk bisa push ke GHCR.
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # Langkah 1: Checkout kode dari repositori
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Langkah 2: Login ke GitHub Container Registry (GHCR)
+      # Ini adalah langkah kunci untuk otentikasi.
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          # 'github.actor' adalah username Anda.
+          # 'secrets.GITHUB_TOKEN' adalah token sementara yang dibuat
+          # secara otomatis oleh GitHub Actions untuk setiap run.
+          # Anda TIDAK perlu membuat secret ini secara manual.
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Langkah 3: Ekstrak metadata untuk Docker image
+      # Action ini secara cerdas membuat tag dan label untuk image kita.
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+
+      # Langkah 4: Bangun dan Push Docker image
+      # Ini adalah langkah utama yang melakukan pekerjaan.
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

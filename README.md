@@ -15,8 +15,8 @@ This repository is part of the "AI Engineer" learning path, specifically focusin
 *   [x] **Day 22-23:** Application successfully containerized using a multi-stage `Dockerfile`.
 *   [x] **Day 24:** Multi-service orchestration (API + Redis) set up with `docker-compose.yml`.
 *   [x] **Day 25:** CI pipeline implemented with GitHub Actions to automate `pytest`.
-*   [ ] **Day 26:** CI pipeline enhanced to run tests inside a Docker container.
-*   [ ] **Day 27:** Docker image successfully pushed to a container registry.
-*   [ ] **Day 28:** CD pipeline implemented to automate image publishing.
+*   [x] **Day 26:** CI pipeline enhanced to run tests inside a Docker container.
+*   [x] **Day 27:** Docker image successfully pushed to a container registry.
+*   [x] **Day 28:** CD pipeline implemented to automate image publishing.
 
 *(This README will be updated with full setup and usage instructions upon completion of the week's goals.)*
